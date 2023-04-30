@@ -13,11 +13,49 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        let myWindow = UIWindow(windowScene: windowScene )
+        myWindow.rootViewController = createUITapBarContoller()
+        myWindow.makeKeyAndVisible()
+        self.window = myWindow
+        
     }
+
+    func createUITapBarContoller() -> UITabBarController {
+
+        let tapBarController = UITabBarController()
+        tapBarController.tabBar.backgroundColor = .white
+        UITabBar.appearance().tintColor = UIColor(red: 0.99, green: 0.23, blue: 0.41, alpha: 1.00)
+        tapBarController.viewControllers = createControllers()
+        return tapBarController
+
+    }
+
+    
+    func createControllers() -> [UIViewController] {
+        
+        let viewController = MenuViewController()
+        let mvpPresenter = MenuViewControllerPresenter()
+        mvpPresenter.mvpView = viewController
+        viewController.mvpPresenter = mvpPresenter
+        
+        let firstNavigationController = UINavigationController(rootViewController: viewController)
+        let image = UIImage(named: "menuTabIcon")
+        firstNavigationController.tabBarItem = UITabBarItem(title: nil, image: image, tag: 0)
+        
+        let secondViewController = UIViewController()
+        secondViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "contactsTabIcon"), tag: 0)
+        
+        let thirdViewController = UIViewController()
+        thirdViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "profileTabIcon"), tag: 0)
+        
+        let fourthViewController = UIViewController()
+        fourthViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "basketTabIcon"), tag: 0)
+        
+        return [firstNavigationController, secondViewController, thirdViewController, fourthViewController]
+    }
+
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
