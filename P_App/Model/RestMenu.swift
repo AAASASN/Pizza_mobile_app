@@ -40,10 +40,16 @@ struct Category: Decodable {
 
 // MARK: - Menu
 struct Menu: Decodable {
+    
     let id: UUID?
     let appId: Int?
-    let name, description: String?
-    let priceFrom, categoryID: Int?
+    
+    let name: String?
+    let description: String?
+
+    let priceFrom: Int?
+    let categoryId: Int?
+
     let categoryName: String?
     let image: String?
 }

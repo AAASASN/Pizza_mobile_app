@@ -36,7 +36,7 @@ class AdCollectionViewPresenter: AdCollectionViewPresenterProtocol, PresenterInp
     }
     
     var networkManager: NetworkManagerProtocol?
-    let bannersUrl = "http://127.0.0.1:8080/api/banners"
+    let bannersUrl = "http://165.22.199.40:8080/api/banners"
 
     init() {
         networkManager = NetworkManager()

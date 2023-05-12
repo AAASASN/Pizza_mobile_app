@@ -1,25 +1,26 @@
 //
-//  MenuTableViewCell.swift
+//  MenuTableViewBigCell.swift
 //  P_App
 //
-//  Created by Александр Мараенко on 06.04.2023.
+//  Created by Александр Мараенко on 11.05.2023.
 //
+
 
 import UIKit
 import pop
 
-protocol MenuTableViewCellInputProtocol: AnyObject {
-    
-    func inputImage(image: UIImage)
-    func inputNameText(name: String)
-    func inputDescriptionText(description: String)
-    func inputPriceFromButtonText(PriceFromButtonText: String)
-    func startActivityIndicator()
-    func stopActivityIndicator()
-    
-}
+//protocol MenuTableViewCellInputProtocol: AnyObject {
+//
+//    func inputImage(image: UIImage)
+//    func inputNameText(name: String)
+//    func inputDescriptionText(description: String)
+//    func inputPriceFromButtonText(PriceFromButtonText: String)
+//    func startActivityIndicator()
+//    func stopActivityIndicator()
+//
+//}
 
-class MenuTableViewCell: UITableViewCell {
+class MenuTableViewBigCell: UITableViewCell {
     
     var mvpPresenter: MenuTableViewCellPresenterProtocol?
     
@@ -34,7 +35,7 @@ class MenuTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        //        contentView.backgroundColor = .lightGray
+//                contentView.backgroundColor = .lightGray
         
         createCellElements()
         addAllSubviews()
@@ -78,6 +79,9 @@ class MenuTableViewCell: UITableViewCell {
         nameLabel = {
             let nameLabel = UILabel(frame: .zero)
             nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+            
+            nameLabel.backgroundColor = .systemGray3
+            
             return nameLabel
         }()
         
@@ -92,6 +96,8 @@ class MenuTableViewCell: UITableViewCell {
         priceFromButton = {
             
             let priceFromButton = UIButton(frame: .zero)
+//            priceFromButton.layer.borderWidth = 1
+//            priceFromButton.layer.borderColor = UIColor(red: 0.77, green: 0.26, blue: 0.02, alpha: 1.00).cgColor // UIColor(red: 0.99, green: 0.23, blue: 0.41, alpha: 0.60).cgColor
             priceFromButton.layer.cornerRadius = 15
             priceFromButton.setTitleColor(UIColor(red: 0.77, green: 0.26, blue: 0.02, alpha: 1.00), for: .normal)
             priceFromButton.backgroundColor = UIColor(red: 1.00, green: 0.93, blue: 0.88, alpha: 1.00)
@@ -99,7 +105,7 @@ class MenuTableViewCell: UITableViewCell {
             
             let action = UIAction { _ in
                 print("")
-                print("DEBUG MenuTableViewCell")
+                print("DEBUG MenuTableViewBigCell")
                 print("priceFromButton pressed")
             }
             
@@ -132,7 +138,7 @@ class MenuTableViewCell: UITableViewCell {
 //            image.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
 //            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             image.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
             image.heightAnchor.constraint(equalToConstant: 140),
             image.widthAnchor.constraint(equalToConstant: 140),
         ])
@@ -171,7 +177,7 @@ class MenuTableViewCell: UITableViewCell {
     
 }
 
-extension MenuTableViewCell: MenuTableViewCellInputProtocol {
+extension MenuTableViewBigCell: MenuTableViewCellInputProtocol {
     
     func inputImage(image: UIImage) {
         self.image.image = image
@@ -201,7 +207,7 @@ extension MenuTableViewCell: MenuTableViewCellInputProtocol {
 }
 
 
-extension MenuTableViewCell {
+extension MenuTableViewBigCell {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -236,7 +242,7 @@ extension MenuTableViewCell {
     
 }
 
-extension MenuTableViewCell {
+extension MenuTableViewBigCell {
     
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -12,6 +12,7 @@ protocol MenuTableViewInputProtocol: AnyObject {
     
     func updateTableView()
     func selectedCategory(categoryID: Int)
+    func tableViewCellTouched()
     
 }
 
@@ -26,6 +27,10 @@ protocol MenuTableViewProtocol {
 class MenuTableView: UITableView, MenuTableViewProtocol {
     
     var mvpPresenter: MenuTableViewPresenterProtocol?
+    
+    // флаг на который смотрит метод willDisplay и передает или не передает в CategoryCollectionView данные о выделении скоролинге ячейки в коллекции
+    var canScrollCategoryCollectionView = true
+
 
     init(mvpPresenter: MenuTableViewPresenterProtocol?, frame: CGRect, style: UITableView.Style) {
         
@@ -36,14 +41,16 @@ class MenuTableView: UITableView, MenuTableViewProtocol {
         self.mvpPresenter = mvpPresenter
 
         self.register(MenuTableViewCell.self, forCellReuseIdentifier: "MenuTableViewCell")
+        self.register(MenuTableViewBigCell.self, forCellReuseIdentifier: "MenuTableViewBigCell")
 
         
         // !!!!!!!!!!!!!!!!!!!!
         backgroundColor = UIColor(red: 243, green: 245, blue: 249, alpha: 1)
-        
+        self.separatorStyle = .none
         
         delegate = self
         dataSource = self
+        
     }
     
     required init?(coder: NSCoder) {
@@ -80,23 +87,40 @@ extension MenuTableView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell", for: indexPath) as! MenuTableViewCell
+        let mvpPresenter = mvpPresenter?.createMenuTableViewCellPresenter(indexPath: indexPath)
+
         
-        if indexPath.section == 1 {
-            let mvpPresenter = mvpPresenter?.createMenuTableViewCellPresenter(indexPath: indexPath)
-            mvpPresenter?.mvpView = cell
-            cell.mvpPresenter = mvpPresenter
-            cell.mvpPresenter?.sendDataToView()
-            cell.startActivityIndicator()
-            cell.image.image = nil
-//            if indexPath.row == 0 {
-//                cell.contentView.layer.cornerRadius = 25
-//                cell.layer.masksToBounds = true
-//                cell.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-//            }
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell", for: indexPath) as! MenuTableViewCell
+        
+        if let bool = self.mvpPresenter?.isShouldCellBig(indexPath: indexPath) {
+            if bool {
+                let bigCell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewBigCell", for: indexPath) as! MenuTableViewBigCell
+                if indexPath.section == 1 {
+//                    let mvpPresenter = mvpPresenter?.createMenuTableViewCellPresenter(indexPath: indexPath)
+                    mvpPresenter?.mvpView = bigCell
+                    bigCell.mvpPresenter = mvpPresenter
+                    bigCell.mvpPresenter?.sendDataToView()
+                    bigCell.startActivityIndicator()
+                    bigCell.image.image = nil
+                }
+                
+                return bigCell
+                
+            } else {
+                if indexPath.section == 1 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell", for: indexPath) as! MenuTableViewCell
+//                    let mvpPresenter = mvpPresenter?.createMenuTableViewCellPresenter(indexPath: indexPath)
+                    mvpPresenter?.mvpView = cell
+                    cell.mvpPresenter = mvpPresenter
+                    cell.mvpPresenter?.sendDataToView()
+                    cell.startActivityIndicator()
+                    cell.image.image = nil
+                    return cell
+
+                }
+            }
         }
-        
-        return cell
+        return UITableViewCell()
     }
     
     
@@ -110,7 +134,7 @@ extension MenuTableView: UITableViewDataSource, UITableViewDelegate {
         
         return UIView(frame: .zero)
     }
-    
+
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
@@ -144,19 +168,16 @@ extension MenuTableView: UITableViewDataSource, UITableViewDelegate {
         }
         
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        180
-    }
-    
+//
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        150
+//    }
     
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        print("")
-//        print("DEBUG MenuTableView")
-//        print("в MenuTableView отпработал метод willDisplay - будет отображена ячейка с индексом \(indexPath.row)  ")
-        
-        mvpPresenter?.willDisplayCell(cellRow: indexPath.row)
+        if canScrollCategoryCollectionView {
+            mvpPresenter?.willDisplayCell(cellRow: indexPath.row)
+        }
     }
     
 //    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -174,24 +195,47 @@ extension MenuTableView: MenuTableViewInputProtocol {
     }
     
     func selectedCategory(categoryID: Int) {
+        
+        canScrollCategoryCollectionView = false
+        
+        print(categoryID)
     
-        var indexArray: [Int] = .init()
+        var indexArray: [Int] = []
 
         guard let menu = mvpPresenter?.menu  else {
             print("")
             print("DEBUG MenuTableView")
             print("в при попытке получить массив menu из mvpPresenter?.menu вернулся nil")
-            return }
+            print("")
+            return
+        }
 
         for (index, item) in menu.enumerated() {
-            if item.categoryID == categoryID + 1 {
+            print(index,item )
+            if item.categoryId == categoryID + 1 {
                 indexArray.append(index)
             }
         }
+        
+        
         guard !indexArray.isEmpty else { return }
+
         self.scrollToRow(at: IndexPath(row: indexArray.first!, section: 1), at: .top, animated: true)
-   
+        
+        
+//        canScrollCategoryCollectionView = true
+
     }
+
+    func tableViewCellTouched() {
+
+        canScrollCategoryCollectionView = true
+
+        print("canScrollCategoryCollectionView = true")
+
+
+    }
+    
     
 }
 

@@ -18,23 +18,28 @@ protocol CategoriesCollectionViewDelegate: AnyObject {
 protocol CategoryCollectionViewProtocol: AnyObject {
     
     var mvpPresenter: CategoryCollectionViewPresenterProtocol? { get set }
-    
+        
     func willDisplayCellWithCategory(categoryID: Int)
     
+    // reloadData()
     func updateCollectionView()
     
 }
 
 class CategoryCollectionView: UICollectionView, CategoryCollectionViewProtocol {
     
-    var selectedCellIndex = 0
+    var selectedCellIndex: Int?
     
     var mvpPresenter: CategoryCollectionViewPresenterProtocol?
     
-    weak var сategoriesCollectionViewDelegate: CategoriesCollectionViewDelegate?
+    
+    // флаг на который смотрит метод didSelectItemAt и передает или не передает в MenuTableView данные о скоролинге таблицы
+    private var canScrollMenuTableView = true
+    
+    // weak var сategoriesCollectionViewDelegate: CategoriesCollectionViewDelegate?
     
     private let flowLayout = UICollectionViewFlowLayout()
-    private var shiftedCategory: Category?
+    // private var shiftedCategory: Category?
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: .zero, collectionViewLayout: flowLayout)
@@ -68,22 +73,19 @@ class CategoryCollectionView: UICollectionView, CategoryCollectionViewProtocol {
     }
     
     
-    // здесь будет реализована прокрутка CategoryCollectionView при скроле основной таблицы
+    // здесь будет реализована прокрутка CategoryCollectionView при скроле основной таблицы MenuTableView
     func willDisplayCellWithCategory(categoryID: Int) {
         
-        print("")
-        print("DEBUG CategoryCollectionView !!!!!!!!!!!!!!!!!!!!!!!!!!")
-        print("отработал метод willDisplayCellWithCategory(categoryID: Int) ")
-        print("пришел номер категории - \(categoryID)")
+        canScrollMenuTableView = false
         
-//        self.scrollToItem(at: IndexPath(row: categoryID - 1, section: 0), at: .centeredHorizontally, animated: true)
-//
-//        
-//            selectedCellIndex = categoryID + 2
-//
-//        
-//
-//        reloadData()
+        self.scrollToItem(at: IndexPath(row: categoryID - 1, section: 0), at: .centeredHorizontally, animated: true)
+
+            selectedCellIndex = categoryID - 1
+
+        reloadData()
+        
+//        canScrollMenuTableView = true
+
     }
 }
     
@@ -112,31 +114,37 @@ extension CategoryCollectionView: UICollectionViewDelegate, UICollectionViewData
             cell.mvpPresenter = presenter
             cell.mvpPresenter?.sendDataToView()
                         
-            
-            if selectedCellIndex == indexPath.row {
-                cell.setSelectedView()
+            if let selectedCellIndex = selectedCellIndex {
+                if selectedCellIndex == indexPath.row {
+                    cell.setSelectedView()
+                }
             }
-            
+                        
             return cell
         }
         return UICollectionViewCell()
     }
     
+
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // при нажатии на ячейку данные о indexPath передаем в презентер
-        mvpPresenter?.sendSelectedCategory(categoryID: indexPath.row)
+                        
+            mvpPresenter?.sendSelectedCategory(categoryID: indexPath.row)
+        
+        // проскроливает выеделенную ячейку по центру коллекции
+            self.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+
     }
     
-    // при нажатии на выделенную ячейку снимается выделение
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        if collectionView.cellForItem(at: indexPath)?.isSelected ?? false {
-            collectionView.deselectItem(at: indexPath, animated: true)
-            return false
-        }
-        return true
-    }
+//    // при нажатии на выделенную ячейку снимается выделение
+//    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+//        if collectionView.cellForItem(at: indexPath)?.isSelected ?? false {
+//            collectionView.deselectItem(at: indexPath, animated: true)
+//            return false
+//        }
+//        return true
+//    }
     
-    //
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let font = UIFont(name: "Arial Bold", size: 14)
@@ -146,6 +154,10 @@ extension CategoryCollectionView: UICollectionViewDelegate, UICollectionViewData
         let width = (someCategory?.size(withAttributes: attributes).width ?? 0) + 55
 
         return CGSize(width: width, height: 32)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     
     func updateCollectionView() {

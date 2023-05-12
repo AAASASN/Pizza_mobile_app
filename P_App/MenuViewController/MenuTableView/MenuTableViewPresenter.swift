@@ -26,30 +26,15 @@ protocol MenuTableViewPresenterProtocol {
     func sendSelectedCategory(categoryID: Int)
     func willDisplayCell(cellRow: Int)
     
+    func tableViewCellTouched()
+    
+    func getNumberOfSections() -> Int
+    
+    func isShouldCellBig(indexPath: IndexPath) -> Bool
+    
 }
 
 class MenuTableViewPresenter: MenuTableViewPresenterProtocol, PresenterInputProtocol {
-    
-
-    func sendSelectedCategory(categoryID: Int) {
-        mvpView?.selectedCategory(categoryID: categoryID)
-    }
-    
-    func willDisplayCell(cellRow: Int) {
-        guard let categoryID = menu?[cellRow].categoryID else { return }
-        
-//        print("")
-//        print("DEBUG MenuTableViewPresenter")
-//        print("в MenuTableViewPresenter отпработал метод willDisplay - будет отображена ячейка с индексом \(cellRow)  ")
-        
-        guard let categoryCollectionViewPresenter = categoryCollectionViewPresenter else {
-            print("")
-            print("DEBUG MenuTableViewPresenter")
-            print("Экземпляр categoryCollectionViewPresenter не был создан")
-            return
-        }
-        categoryCollectionViewPresenter.willDisplayCellWithCategory(categoryID: categoryID)
-    }
     
     weak var mvpView: MenuTableViewInputProtocol?
     
@@ -66,16 +51,19 @@ class MenuTableViewPresenter: MenuTableViewPresenterProtocol, PresenterInputProt
             mvpView?.updateTableView()
             print("был вызван метод mvpView?.updateTableView() для обнавления таблицы")
 
+            createIndexForBigCell()
         }
         
     }
+    
+    var indexForBigCell = [Int]()
     
     var banners: [Banner]?
     
     var categories: [Category]?
     
     var networkManager: NetworkManagerProtocol?
-    let mealsUrl = "http://127.0.0.1:8080/api/meals"
+    let mealsUrl = "http://165.22.199.40:8080/api/meals"
 
     init() {
         networkManager = NetworkManager()
@@ -98,7 +86,13 @@ class MenuTableViewPresenter: MenuTableViewPresenterProtocol, PresenterInputProt
                 
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let someRestMenu = try decoder.decode([Menu].self, from: restMenuAsData )
+                var someRestMenu = try decoder.decode([Menu].self, from: restMenuAsData )
+                
+                someRestMenu.sort {( s1, s2) in
+                    let indexS1 = String(s1.categoryId ?? 0) + String(s1.appId ?? 0)
+                    let indexS2 = String(s2.categoryId ?? 0) + String(s2.appId ?? 0)
+                    return indexS1 < indexS2
+                }
                 
                 menu = someRestMenu
 
@@ -116,6 +110,31 @@ class MenuTableViewPresenter: MenuTableViewPresenterProtocol, PresenterInputProt
                 print("JSONDecoder не отработал \(error)")
             }
 
+    }
+    
+    func getNumberOfSections() -> Int {
+
+        var sectionTypeArray = [Int]()
+        
+        guard let menu = menu else { return 1 } // позвращается одна секция
+        
+        for meal in menu {
+            if let mealCategoryId = meal.categoryId {
+                if !sectionTypeArray.contains(mealCategoryId) {
+                    sectionTypeArray.append(mealCategoryId)
+                }
+            }
+        }
+        
+        print("")
+        print("DEBUG MenuTableViewPresenter")
+        print("sectionTypeArray.count -")
+        print(sectionTypeArray.count)
+        print("")
+        print(sectionTypeArray)
+        print("")
+
+        return 0
     }
     
     func getNumberOfRowsInSection() -> Int {
@@ -140,6 +159,7 @@ class MenuTableViewPresenter: MenuTableViewPresenterProtocol, PresenterInputProt
     func createMenuTableViewCellPresenter(indexPath: IndexPath) -> MenuTableViewCellPresenter {
         let menuTableViewCellPresenter = MenuTableViewCellPresenter()
         menuTableViewCellPresenter.menuItem = menu?[indexPath.row]
+        menuTableViewCellPresenter.menuTableViewPresenter = self
         return menuTableViewCellPresenter
     }
 
@@ -166,6 +186,54 @@ class MenuTableViewPresenter: MenuTableViewPresenterProtocol, PresenterInputProt
         adCollectionViewPresenter.mvpView = adCollectionView
         adCollectionView.mvpPresenter = adCollectionViewPresenter
         return adCollectionView
+    }
+    
+    
+    func tableViewCellTouched() {
+        mvpView?.tableViewCellTouched()
+    }
+    
+    func sendSelectedCategory(categoryID: Int) {
+        mvpView?.selectedCategory(categoryID: categoryID)
+    }
+    
+    func willDisplayCell(cellRow: Int) {
+        guard let categoryID = menu?[cellRow].categoryId else { return }
+        
+//        print("")
+//        print("DEBUG MenuTableViewPresenter")
+//        print("в MenuTableViewPresenter отпработал метод willDisplay - будет отображена ячейка с индексом \(cellRow)  ")
+        
+        guard let categoryCollectionViewPresenter = categoryCollectionViewPresenter else {
+            print("")
+            print("DEBUG MenuTableViewPresenter")
+            print("Экземпляр categoryCollectionViewPresenter не был создан")
+            
+            return
+        }
+        categoryCollectionViewPresenter.willDisplayCellWithCategory(categoryID: categoryID)
+    }
+    
+    func createIndexForBigCell() {
+        var indexForBigCell = [Int]()
+        guard let menu = menu else { return }
+        for (index, item) in menu.enumerated() {
+            print(index,item )
+            if item.appId == 1 {
+                indexForBigCell.append(index)
+            }
+        }
+        self.indexForBigCell = indexForBigCell
+    }
+    
+    func isShouldCellBig(indexPath: IndexPath) -> Bool {
+        
+        if indexForBigCell.contains(indexPath.row) {
+            return true
+        } else {
+            return false
+        }
+        
     }
 
 }

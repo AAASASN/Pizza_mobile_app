@@ -10,5 +10,8 @@ target 'P_App' do
    pod 'Alamofire'
    pod 'Moya'
    pod 'SwiftyJSON'
+   pod 'pop', '~> 1.0'
+   
 
+   
 end

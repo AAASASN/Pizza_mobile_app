@@ -12,9 +12,11 @@ protocol MenuTableViewCellPresenterProtocol {
     
     var menuItem: Menu? { get set }
     var mvpView: MenuTableViewCellInputProtocol? { get set }
+    var menuTableViewPresenter: MenuTableViewPresenterProtocol? { get set }
     
     func sendDataToView()
-    
+    func tableViewCellTouched()
+        
 }
 
 class MenuTableViewCellPresenter: MenuTableViewCellPresenterProtocol  {
@@ -22,6 +24,9 @@ class MenuTableViewCellPresenter: MenuTableViewCellPresenterProtocol  {
     weak var mvpView: MenuTableViewCellInputProtocol?
     
     var mvpModel: NetworkManagerProtocol?
+    
+    // ????? weak
+    var menuTableViewPresenter: MenuTableViewPresenterProtocol?
     
     var menuItem: Menu? {
         didSet {
@@ -61,6 +66,10 @@ class MenuTableViewCellPresenter: MenuTableViewCellPresenterProtocol  {
         mvpView?.inputDescriptionText(description: menuItem?.description ?? "description error")
         mvpView?.inputPriceFromButtonText(PriceFromButtonText: String(menuItem?.priceFrom ?? 0))
         
+    }
+    
+    func tableViewCellTouched() {
+        menuTableViewPresenter?.tableViewCellTouched()
     }
     
 }

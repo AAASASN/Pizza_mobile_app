@@ -27,6 +27,7 @@
 		1118212829DEC58500F026C5 /* MenuTableViewCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1118212729DEC58500F026C5 /* MenuTableViewCellPresenter.swift */; };
 		111BF8DB29E43C67008A0C64 /* MenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111BF8DA29E43C67008A0C64 /* MenuTableView.swift */; };
 		111BF8DD29E43C7D008A0C64 /* MenuTableViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111BF8DC29E43C7D008A0C64 /* MenuTableViewPresenter.swift */; };
+		112554312A0D259200FDEEDA /* MenuTableViewBigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112554302A0D259200FDEEDA /* MenuTableViewBigCell.swift */; };
 		3A186800D49680B808F531F1 /* Pods_P_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05823305E1B4D09331A43712 /* Pods_P_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		1118212729DEC58500F026C5 /* MenuTableViewCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCellPresenter.swift; sourceTree = "<group>"; };
 		111BF8DA29E43C67008A0C64 /* MenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableView.swift; sourceTree = "<group>"; };
 		111BF8DC29E43C7D008A0C64 /* MenuTableViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewPresenter.swift; sourceTree = "<group>"; };
+		112554302A0D259200FDEEDA /* MenuTableViewBigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewBigCell.swift; sourceTree = "<group>"; };
 		539223BD9BF7F2CD0B4F60FF /* Pods-P_App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-P_App.release.xcconfig"; path = "Target Support Files/Pods-P_App/Pods-P_App.release.xcconfig"; sourceTree = "<group>"; };
 		67C58179D40A851E7FB5FFC5 /* Pods-P_App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-P_App.debug.xcconfig"; path = "Target Support Files/Pods-P_App/Pods-P_App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -149,6 +151,7 @@
 			children = (
 				1118212529DEC56C00F026C5 /* MenuTableViewCell.swift */,
 				1118212729DEC58500F026C5 /* MenuTableViewCellPresenter.swift */,
+				112554302A0D259200FDEEDA /* MenuTableViewBigCell.swift */,
 			);
 			path = MenuTableViewCell;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				110AA12F29DCAD5C00AA592E /* MenuViewControllerPresenter.swift in Sources */,
 				110AA10829DAD56500AA592E /* MenuViewController.swift in Sources */,
 				1118212829DEC58500F026C5 /* MenuTableViewCellPresenter.swift in Sources */,
+				112554312A0D259200FDEEDA /* MenuTableViewBigCell.swift in Sources */,
 				110AA12A29DCAC8000AA592E /* CategoryCollectionViewPresenter.swift in Sources */,
 				110AA13229DD59CD00AA592E /* RestMenu.swift in Sources */,
 				110AA10429DAD56500AA592E /* AppDelegate.swift in Sources */,

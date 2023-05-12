@@ -40,10 +40,12 @@ class CategoryCollectionViewPresenter: CategoryCollectionViewPresenterProtocol, 
     }
     
     weak var mvpView: CategoryCollectionViewProtocol?
+    
+    // презентер для передачи данных о нажатой категории на CategoryCollectionView
     var menuTableViewPresenter: MenuTableViewPresenterProtocol?
     
     var networkManager: NetworkManagerProtocol?
-    let categoriesUrl = "http://127.0.0.1:8080/api/categories"
+    let categoriesUrl = "http://165.22.199.40:8080/api/categories"
 
     init() {
         networkManager = NetworkManager()
