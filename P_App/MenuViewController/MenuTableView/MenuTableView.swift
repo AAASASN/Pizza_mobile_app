@@ -45,7 +45,7 @@ class MenuTableView: UITableView, MenuTableViewProtocol {
 
         
         // !!!!!!!!!!!!!!!!!!!!
-        backgroundColor = UIColor(red: 243, green: 245, blue: 249, alpha: 1)
+        backgroundColor = .systemGray6 //UIColor(red: 243, green: 245, blue: 249, alpha: 1)
         self.separatorStyle = .none
         
         delegate = self

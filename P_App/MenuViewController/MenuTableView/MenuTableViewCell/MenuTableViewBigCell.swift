@@ -9,17 +9,6 @@
 import UIKit
 import pop
 
-//protocol MenuTableViewCellInputProtocol: AnyObject {
-//
-//    func inputImage(image: UIImage)
-//    func inputNameText(name: String)
-//    func inputDescriptionText(description: String)
-//    func inputPriceFromButtonText(PriceFromButtonText: String)
-//    func startActivityIndicator()
-//    func stopActivityIndicator()
-//
-//}
-
 class MenuTableViewBigCell: UITableViewCell {
     
     var mvpPresenter: MenuTableViewCellPresenterProtocol?
@@ -29,6 +18,7 @@ class MenuTableViewBigCell: UITableViewCell {
     var nameLabel: UILabel!
     var descriptionLabel: UILabel!
     var priceFromButton: UIButton!
+    var whiteView: UIView!
     
 //    let panGestureRecognizer = UIPanGestureRecognizer()
     
@@ -42,11 +32,12 @@ class MenuTableViewBigCell: UITableViewCell {
         setConstraints()
         
         self.selectionStyle = .none
-        backgroundColor = .white
+        backgroundColor = .systemGray6
         
 //        contentView.addGestureRecognizer(panGestureRecognizer)
 //
 //        panGestureRecognizer.addTarget(self, action: #selector(handleTapGesture(_:)))
+        
 //
     }
     
@@ -65,6 +56,13 @@ class MenuTableViewBigCell: UITableViewCell {
     
     func createCellElements() {
         
+        whiteView = {
+            let whiteView = UIView(frame: .zero)
+            whiteView.layer.cornerRadius = 15
+            whiteView.backgroundColor = .white
+            return whiteView
+        }()
+        
         image = {
             let image = UIImageView(frame: .zero)
             image.contentMode = .scaleAspectFill
@@ -78,17 +76,18 @@ class MenuTableViewBigCell: UITableViewCell {
         
         nameLabel = {
             let nameLabel = UILabel(frame: .zero)
-            nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+            nameLabel.font = UIFont.boldSystemFont(ofSize: 20)
             
-            nameLabel.backgroundColor = .systemGray3
+//            nameLabel.backgroundColor = .systemGray3
+            nameLabel.numberOfLines = 0
             
             return nameLabel
         }()
         
         descriptionLabel = {
             let descriptionLabel = UILabel(frame: .zero)
-            descriptionLabel.font = UIFont.systemFont(ofSize: 13)
-            descriptionLabel.textColor = .systemGray2
+            descriptionLabel.font = UIFont.systemFont(ofSize: 13, weight: .light)
+            descriptionLabel.textColor = .darkGray
             descriptionLabel.numberOfLines = 0
             return descriptionLabel
         }()
@@ -96,12 +95,10 @@ class MenuTableViewBigCell: UITableViewCell {
         priceFromButton = {
             
             let priceFromButton = UIButton(frame: .zero)
-//            priceFromButton.layer.borderWidth = 1
-//            priceFromButton.layer.borderColor = UIColor(red: 0.77, green: 0.26, blue: 0.02, alpha: 1.00).cgColor // UIColor(red: 0.99, green: 0.23, blue: 0.41, alpha: 0.60).cgColor
             priceFromButton.layer.cornerRadius = 15
             priceFromButton.setTitleColor(UIColor(red: 0.77, green: 0.26, blue: 0.02, alpha: 1.00), for: .normal)
             priceFromButton.backgroundColor = UIColor(red: 1.00, green: 0.93, blue: 0.88, alpha: 1.00)
-            priceFromButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)//.italicSystemFont(ofSize: 12)
+            priceFromButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
             
             let action = UIAction { _ in
                 print("")
@@ -114,65 +111,102 @@ class MenuTableViewBigCell: UITableViewCell {
             return priceFromButton
             
         }()
+
+
     }
     
     
     func addAllSubviews() {
+        contentView.addSubview(whiteView)
+
         contentView.addSubview(image)
         contentView.addSubview(nameLabel)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(priceFromButton)
-        image.addSubview(activityIndicator)
+//        image.addSubview(activityIndicator)
     }
     
     
     func setConstraints() {
         
+        NSLayoutConstraint.activate([
+            
+            whiteView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 130),
+            whiteView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            whiteView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            whiteView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            
+//            whiteView.heightAnchor.constraint(equalToConstant: 400),
+//            whiteView.widthAnchor.constraint(equalToConstant: 400),
+//            whiteView.centerXAnchor.constraint(equalTo: centerXAnchor),
+//            whiteView.centerYAnchor.constraint(equalTo: centerYAnchor)
+
+
+        ])
+
         image.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         priceFromButton.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        
+        whiteView.translatesAutoresizingMaskIntoConstraints = false
+
+//        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-//            image.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-//            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-            image.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-            image.heightAnchor.constraint(equalToConstant: 140),
-            image.widthAnchor.constraint(equalToConstant: 140),
+            image.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
+//            image.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 50),
+            image.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -50),
+
+//            image.widthAnchor.constraint(equalToConstant: 260),
+            image.heightAnchor.constraint(equalToConstant: 220),
+
+//            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
         ])
-        
+
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            nameLabel.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 32),
+            nameLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 60),
+            nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
-            nameLabel.heightAnchor.constraint(equalToConstant: 20)
+            
+//            nameLabel.widthAnchor.constraint(equalToConstant: 260),
+//            nameLabel.heightAnchor.constraint(equalToConstant: 20),
+
         ])
-        
+
         NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
-            descriptionLabel.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 32),
+            descriptionLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+            
+            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -70),
-            descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 50)
+            
+            descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 50),
+            
+//            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32),
+
         ])
-        
+
         NSLayoutConstraint.activate([
-            priceFromButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -56),
-//            priceFromButton.leadingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -113),
-            priceFromButton.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 32),
-            priceFromButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -130),
-            priceFromButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
+            priceFromButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
+            priceFromButton.leadingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -120),
+            priceFromButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
+            
+            priceFromButton.heightAnchor.constraint(equalToConstant: 30),
+            
+            priceFromButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
         ])
         
-        NSLayoutConstraint.activate([
-            activityIndicator.topAnchor.constraint(equalTo: image.topAnchor, constant: 20),
-            activityIndicator.leadingAnchor.constraint(equalTo: image.leadingAnchor, constant: 20),
-            activityIndicator.trailingAnchor.constraint(equalTo: image.trailingAnchor, constant: -20),
-            activityIndicator.bottomAnchor.constraint(equalTo: image.bottomAnchor, constant: -20)
-        ])
-        
+
+//
+//        NSLayoutConstraint.activate([
+//            activityIndicator.topAnchor.constraint(equalTo: image.topAnchor, constant: 20),
+//            activityIndicator.leadingAnchor.constraint(equalTo: image.leadingAnchor, constant: 20),
+//            activityIndicator.trailingAnchor.constraint(equalTo: image.trailingAnchor, constant: -20),
+//            activityIndicator.bottomAnchor.constraint(equalTo: image.bottomAnchor, constant: -20)
+//        ])
+
     }
     
 }

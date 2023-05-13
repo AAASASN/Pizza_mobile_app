@@ -28,7 +28,7 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(red: 0.95, green: 0.96, blue: 0.98, alpha: 1.00)
+        view.backgroundColor = .systemGray6 //UIColor(red: 0.95, green: 0.96, blue: 0.98, alpha: 1.00)
         
         navigationBarSet()
         tableViewSetting()

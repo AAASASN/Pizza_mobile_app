@@ -37,7 +37,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         didSet {
             backgroundColor = self.isSelected ?
             UIColor(red: 1.00, green: 0.93, blue: 0.88, alpha: 1.00) :
-            UIColor(red: 0.94, green: 0.93, blue: 0.96, alpha: 1.00)
+                .systemGray5 // UIColor(red: 0.94, green: 0.93, blue: 0.96, alpha: 1.00)
 
             streamTitle.textColor =  self.isSelected ?
             UIColor(red: 0.77, green: 0.26, blue: 0.02, alpha: 1.00) :
@@ -60,7 +60,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     }
     
     private func setView(){
-        backgroundColor =  UIColor(red: 0.94, green: 0.93, blue: 0.96, alpha: 1.00)
+        backgroundColor = .systemGray5 //  UIColor(red: 0.94, green: 0.93, blue: 0.96, alpha: 1.00)
         layer.cornerRadius = self.frame.height/2
         addSubview(streamTitle)
     }

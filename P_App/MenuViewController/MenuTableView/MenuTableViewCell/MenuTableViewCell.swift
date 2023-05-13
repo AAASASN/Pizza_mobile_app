@@ -41,8 +41,8 @@ class MenuTableViewCell: UITableViewCell {
         setConstraints()
         
         self.selectionStyle = .none
-        backgroundColor = .white
-        
+        backgroundColor = .systemGray6
+
 //        contentView.addGestureRecognizer(panGestureRecognizer)
 //
 //        panGestureRecognizer.addTarget(self, action: #selector(handleTapGesture(_:)))
