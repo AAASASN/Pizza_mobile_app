@@ -71,6 +71,7 @@ class CategoryCollectionView: UICollectionView, CategoryCollectionViewProtocol {
         // регистрация ячейки
         register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
+        
     }
     
     

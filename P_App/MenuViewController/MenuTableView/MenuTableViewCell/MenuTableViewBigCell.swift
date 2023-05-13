@@ -43,6 +43,12 @@ class MenuTableViewBigCell: UITableViewCell {
             let whiteView = UIView(frame: .zero)
             whiteView.layer.cornerRadius = 15
             whiteView.backgroundColor = .white
+
+            whiteView.layer.shadowOffset = CGSize(width: 4, height: 4)
+            whiteView.layer.shadowRadius = 10
+            whiteView.layer.shadowColor = UIColor.gray.cgColor
+            whiteView.layer.shadowOpacity = 0.3
+            
             return whiteView
         }()
         

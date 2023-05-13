@@ -62,13 +62,16 @@ class MenuTableViewCell: UITableViewCell {
         nameLabel = {
             let nameLabel = UILabel(frame: .zero)
             nameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+            nameLabel.numberOfLines = 0
+
             return nameLabel
         }()
         
         descriptionLabel = {
             let descriptionLabel = UILabel(frame: .zero)
             descriptionLabel.font = UIFont.systemFont(ofSize: 13)
-            descriptionLabel.textColor = .systemGray2
+            descriptionLabel.textColor = .darkGray
+            
             descriptionLabel.numberOfLines = 0
             return descriptionLabel
         }()
@@ -79,7 +82,12 @@ class MenuTableViewCell: UITableViewCell {
             priceFromButton.layer.cornerRadius = 15
             priceFromButton.setTitleColor(UIColor(red: 0.77, green: 0.26, blue: 0.02, alpha: 1.00), for: .normal)
             priceFromButton.backgroundColor = UIColor(red: 1.00, green: 0.93, blue: 0.88, alpha: 1.00)
-            priceFromButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)//.italicSystemFont(ofSize: 12)
+            priceFromButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
+            
+            priceFromButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+            priceFromButton.layer.shadowRadius = 5
+            priceFromButton.layer.shadowColor = UIColor.gray.cgColor
+            priceFromButton.layer.shadowOpacity = 0.2
             
             let action = UIAction { _ in
                 print("")
@@ -123,7 +131,7 @@ class MenuTableViewCell: UITableViewCell {
             nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             nameLabel.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 32),
             nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
-            nameLabel.heightAnchor.constraint(equalToConstant: 20)
+//            nameLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
         
         NSLayoutConstraint.activate([

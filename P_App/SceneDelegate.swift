@@ -42,16 +42,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let firstNavigationController = UINavigationController(rootViewController: viewController)
 //        let image = UIImage(named: "menuTabIcon")
-        firstNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "menuTabIcon"), tag: 0)
+        firstNavigationController.tabBarItem = UITabBarItem(title: "Меню", image: UIImage(named: "profileTabIcon"), tag: 0)
         
         let secondViewController = UIViewController()
-        secondViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "contactsTabIcon"), tag: 0)
+        secondViewController.tabBarItem = UITabBarItem(title: "Контакты", image: UIImage(named: "contactsTabIcon"), tag: 0)
         
         let thirdViewController = UIViewController()
-        thirdViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "profileTabIcon"), tag: 0)
+        thirdViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(named: "profileTabIcon"), tag: 0)
         
         let fourthViewController = UIViewController()
-        fourthViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "basketTabIcon"), tag: 0)
+        fourthViewController.tabBarItem = UITabBarItem(title: "Корзина", image: UIImage(named: "basketTabIcon"), tag: 0)
         
         return [firstNavigationController, secondViewController, thirdViewController, fourthViewController]
    

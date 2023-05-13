@@ -129,6 +129,7 @@ extension MenuTableView: UITableViewDataSource, UITableViewDelegate {
         
         if section == 0 {
             let view = mvpPresenter?.createAdCollectionView()
+
             return view
         }
         

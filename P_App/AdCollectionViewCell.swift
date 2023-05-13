@@ -22,33 +22,24 @@ class AdCollectionViewCell: UICollectionViewCell {
     
     let adView: UIView = {
         
-        let adView = UIView(frame: CGRect(x: 0, y: 0, width: 260, height: 112))
-        adView.layer.cornerRadius = 20
-        adView.clipsToBounds = true
+        let adView = UIView(frame: CGRect(x: 0, y: 0, width: 290, height: 80))
         return adView
         
     }()
     
     let adImageViewView: UIImageView = {
         
-        let adImageViewView = UIImageView(frame: CGRect(x: 0, y: 0, width: 260, height: 112))
-        
-//        adImageViewView.backgroundColor = .green
-//        adImageViewView.layer.cornerRadius = 20
-        
+        let adImageViewView = UIImageView(frame: CGRect(x: 0, y: 0, width: 290, height: 80))
         adImageViewView.contentMode = .scaleAspectFit
-        
         return adImageViewView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        addSubview(adView)
+        contentView.addSubview(adView)
         adView.addSubview(adImageViewView)
-        
-        layer.cornerRadius = 10
-        
+    
     }
     
     required init?(coder: NSCoder) {

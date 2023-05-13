@@ -19,7 +19,6 @@ class AdCollectionView: UICollectionView, AdCollectionViewInputProtocol {
     var mvpPresenter: AdCollectionViewPresenterProtocol?
     
     private let flowLayout = UICollectionViewFlowLayout()
-//    private var imageArray =  ["ad_1", "ad_1", "ad_1", "ad_1", "ad_1", "ad_1", "ad_1", "ad_1"]
    
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: .zero, collectionViewLayout: flowLayout)
@@ -33,12 +32,9 @@ class AdCollectionView: UICollectionView, AdCollectionViewInputProtocol {
     
     private func viewSetting() {
 
-//        flowLayout.minimumInteritemSpacing = 0
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 10
 
-        
-        backgroundColor = .none
         showsHorizontalScrollIndicator = false
         translatesAutoresizingMaskIntoConstraints = false
         bounces = true
@@ -85,9 +81,13 @@ extension AdCollectionView: UICollectionViewDelegate, UICollectionViewDataSource
         return UICollectionViewCell()
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        return CGSize(width: 260, height: 112)
+        return CGSize(width: 280, height: 80)
     }
     
     func updateCollectionView() {
