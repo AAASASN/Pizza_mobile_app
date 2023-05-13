@@ -28,39 +28,23 @@ class MenuTableViewCell: UITableViewCell {
     var nameLabel: UILabel!
     var descriptionLabel: UILabel!
     var priceFromButton: UIButton!
-    
-//    let panGestureRecognizer = UIPanGestureRecognizer()
-    
+        
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        //        contentView.backgroundColor = .lightGray
-        
+                
         createCellElements()
         addAllSubviews()
         setConstraints()
         
         self.selectionStyle = .none
-        backgroundColor = .systemGray6
+        backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 1.00) // .systemGray6
 
-//        contentView.addGestureRecognizer(panGestureRecognizer)
-//
-//        panGestureRecognizer.addTarget(self, action: #selector(handleTapGesture(_:)))
-//
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-//    @objc func handleTapGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
-//
-//        print("touchesMoved")
-//
-//        mvpPresenter?.tableViewCellTouched()
-//
-//    }
+
     
     func createCellElements() {
         
@@ -129,8 +113,6 @@ class MenuTableViewCell: UITableViewCell {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-//            image.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-//            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             image.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             image.heightAnchor.constraint(equalToConstant: 140),
@@ -154,7 +136,6 @@ class MenuTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             priceFromButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -56),
-//            priceFromButton.leadingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -113),
             priceFromButton.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 32),
             priceFromButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -130),
             priceFromButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)

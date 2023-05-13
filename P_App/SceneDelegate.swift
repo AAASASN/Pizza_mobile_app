@@ -41,8 +41,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         viewController.mvpPresenter = mvpPresenter
         
         let firstNavigationController = UINavigationController(rootViewController: viewController)
-        let image = UIImage(named: "menuTabIcon")
-        firstNavigationController.tabBarItem = UITabBarItem(title: nil, image: image, tag: 0)
+//        let image = UIImage(named: "menuTabIcon")
+        firstNavigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "menuTabIcon"), tag: 0)
         
         let secondViewController = UIViewController()
         secondViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "contactsTabIcon"), tag: 0)
@@ -54,6 +54,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         fourthViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "basketTabIcon"), tag: 0)
         
         return [firstNavigationController, secondViewController, thirdViewController, fourthViewController]
+   
     }
 
 

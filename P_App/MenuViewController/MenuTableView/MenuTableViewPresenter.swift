@@ -16,7 +16,6 @@ protocol MenuTableViewPresenterProtocol {
     var mvpView: MenuTableViewInputProtocol? { get set }
     var categoryCollectionViewPresenter: CategoryCollectionViewPresenterProtocol? { get set }
     
-//    func numberOfSectionsInMenuTableView() -> Int
     func getNumberOfRowsInSection() -> Int
     
     func createMenuTableViewCellPresenter(indexPath: IndexPath) -> MenuTableViewCellPresenter
@@ -95,10 +94,6 @@ class MenuTableViewPresenter: MenuTableViewPresenterProtocol, PresenterInputProt
                 }
                 
                 menu = someRestMenu
-
-    //            menu = someRestMenu.data?.menu
-    //            banners = someRestMenu.data?.banners
-    //            categories = someRestMenu.data?.categories
                 
                 print("")
                 print("DEBUG MenuTableViewPresenter")
@@ -199,10 +194,6 @@ class MenuTableViewPresenter: MenuTableViewPresenterProtocol, PresenterInputProt
     
     func willDisplayCell(cellRow: Int) {
         guard let categoryID = menu?[cellRow].categoryId else { return }
-        
-//        print("")
-//        print("DEBUG MenuTableViewPresenter")
-//        print("в MenuTableViewPresenter отпработал метод willDisplay - будет отображена ячейка с индексом \(cellRow)  ")
         
         guard let categoryCollectionViewPresenter = categoryCollectionViewPresenter else {
             print("")

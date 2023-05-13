@@ -16,11 +16,8 @@ protocol MenuTableViewInputProtocol: AnyObject {
     
 }
 
-
 protocol MenuTableViewProtocol {
-    
     var mvpPresenter: MenuTableViewPresenterProtocol? { get set }
-        
 }
 
 
@@ -43,9 +40,7 @@ class MenuTableView: UITableView, MenuTableViewProtocol {
         self.register(MenuTableViewCell.self, forCellReuseIdentifier: "MenuTableViewCell")
         self.register(MenuTableViewBigCell.self, forCellReuseIdentifier: "MenuTableViewBigCell")
 
-        
-        // !!!!!!!!!!!!!!!!!!!!
-        backgroundColor = .systemGray6 //UIColor(red: 243, green: 245, blue: 249, alpha: 1)
+        backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 1.00)
         self.separatorStyle = .none
         
         delegate = self
@@ -89,14 +84,10 @@ extension MenuTableView: UITableViewDataSource, UITableViewDelegate {
         
         let mvpPresenter = mvpPresenter?.createMenuTableViewCellPresenter(indexPath: indexPath)
 
-        
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell", for: indexPath) as! MenuTableViewCell
-        
         if let bool = self.mvpPresenter?.isShouldCellBig(indexPath: indexPath) {
             if bool {
                 let bigCell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewBigCell", for: indexPath) as! MenuTableViewBigCell
                 if indexPath.section == 1 {
-//                    let mvpPresenter = mvpPresenter?.createMenuTableViewCellPresenter(indexPath: indexPath)
                     mvpPresenter?.mvpView = bigCell
                     bigCell.mvpPresenter = mvpPresenter
                     bigCell.mvpPresenter?.sendDataToView()
@@ -109,7 +100,6 @@ extension MenuTableView: UITableViewDataSource, UITableViewDelegate {
             } else {
                 if indexPath.section == 1 {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "MenuTableViewCell", for: indexPath) as! MenuTableViewCell
-//                    let mvpPresenter = mvpPresenter?.createMenuTableViewCellPresenter(indexPath: indexPath)
                     mvpPresenter?.mvpView = cell
                     cell.mvpPresenter = mvpPresenter
                     cell.mvpPresenter?.sendDataToView()
@@ -128,7 +118,6 @@ extension MenuTableView: UITableViewDataSource, UITableViewDelegate {
         
         if section == 1 {
             let view = mvpPresenter?.createCategoryCollectionView()
-//            view?.mvpPresenter?.menuTableViewPresenter = self.mvpPresenter
             return view
         }
         
@@ -140,7 +129,6 @@ extension MenuTableView: UITableViewDataSource, UITableViewDelegate {
         
         if section == 0 {
             let view = mvpPresenter?.createAdCollectionView()
-//            let view = AdCollectionView()
             return view
         }
         
@@ -168,23 +156,13 @@ extension MenuTableView: UITableViewDataSource, UITableViewDelegate {
         }
         
     }
-//
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        150
-//    }
     
-    
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if canScrollCategoryCollectionView {
             mvpPresenter?.willDisplayCell(cellRow: indexPath.row)
         }
     }
-    
-//    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        mvpPresenter?.willDisplayCell(cellRow: indexPath.row)
-//
-//    }
-    
     
 }
 
@@ -222,9 +200,6 @@ extension MenuTableView: MenuTableViewInputProtocol {
 
         self.scrollToRow(at: IndexPath(row: indexArray.first!, section: 1), at: .top, animated: true)
         
-        
-//        canScrollCategoryCollectionView = true
-
     }
 
     func tableViewCellTouched() {
